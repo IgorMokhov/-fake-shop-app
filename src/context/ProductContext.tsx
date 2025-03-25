@@ -17,22 +17,22 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [order, setOrder] = useState<ICartItem[]>([]);
   const totalPrice = order.reduce((sum, product) => sum + product.price * product.quantity, 0);
 
-  const addToOrder = (product: ICartItem) => {
+  const addToOrder = ({ id, title, price, image }: ICartItem) => {
     setOrder((prevOrder) => {
-      const isExist = prevOrder.some((item) => item.id === product.id);
+      const isExist = prevOrder.some((item) => item.id === id);
 
       if (isExist) {
         return prevOrder.map((item) =>
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+          item.id === id ? { ...item, quantity: item.quantity + 1 } : item
         );
       } else {
         return [
           ...prevOrder,
           {
-            id: product.id,
-            title: product.title,
-            price: product.price,
-            image: product.image,
+            id,
+            title,
+            price,
+            image,
             quantity: 1,
           },
         ];
