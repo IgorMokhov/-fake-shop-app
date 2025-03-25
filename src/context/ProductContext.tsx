@@ -6,6 +6,7 @@ interface IProductContext {
   products: IProduct[];
   order: ICartItem[];
   totalPrice: number;
+  error: string | null;
   addToOrder: (product: ICartItem) => void;
   removeFromOrder: (id: number) => void;
 }
@@ -15,6 +16,7 @@ export const ProductContext = createContext<IProductContext | null>(null);
 export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<IProduct[]>([]);
   const [order, setOrder] = useState<ICartItem[]>([]);
+  const [error, setError] = useState<string | null>(null);
   const totalPrice = order.reduce((sum, product) => sum + product.price * product.quantity, 0);
 
   const addToOrder = ({ id, title, price, image }: ICartItem) => {
@@ -46,22 +48,27 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setError(null);
+
       try {
         const data = await getAllProducts();
         if (data) setProducts(data);
       } catch (error) {
         if (error instanceof Error) {
-          console.error(error.message);
+          setError(error.message);
         } else {
           console.error('Unexpected error:', error);
         }
       }
     };
+    
     fetchData();
   }, []);
 
   return (
-    <ProductContext.Provider value={{ products, order, totalPrice, addToOrder, removeFromOrder }}>
+    <ProductContext.Provider
+      value={{ products, order, totalPrice, error, addToOrder, removeFromOrder }}
+    >
       {children}
     </ProductContext.Provider>
   );
