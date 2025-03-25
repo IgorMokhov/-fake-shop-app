@@ -5,6 +5,7 @@ import { App } from './App.tsx';
 import { theme, GlobalStylesComponent } from './theme';
 import { BrowserRouter } from 'react-router';
 import { ProductProvider } from './context/ProductContext.tsx';
+import { SearchProvider } from './context/SearchContext.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -12,7 +13,9 @@ createRoot(document.getElementById('root')!).render(
       <GlobalStylesComponent />
       <BrowserRouter>
         <ProductProvider>
-          <App />
+          <SearchProvider>
+            <App />
+          </SearchProvider>
         </ProductProvider>
       </BrowserRouter>
     </ThemeProvider>
