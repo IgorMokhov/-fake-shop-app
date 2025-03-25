@@ -1,9 +1,12 @@
 import { Box, Container } from '@mui/material';
 import { Header } from './components/Header/Header';
 import { Route, Routes } from 'react-router';
-import { HomePage } from './pages/HomePage';
-import { CartPage } from './pages/CartPage';
-import { NoteFoundPage } from './pages/NotFoundPage';
+import { lazy, Suspense } from 'react';
+import { Loader } from './UI/Loader';
+
+const HomePage = lazy(() => import('./pages/HomePage'));
+const CartPage = lazy(() => import('./pages/CartPage'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 export const App = () => {
   return (
@@ -12,11 +15,13 @@ export const App = () => {
 
       <Box component="main">
         <Container maxWidth="lg">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="cart" element={<CartPage />} />
-            <Route path="*" element={<NoteFoundPage />} />
-          </Routes>
+          <Suspense fallback={<Loader />}>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="cart" element={<CartPage />} />
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </Suspense>
         </Container>
       </Box>
     </>

@@ -1,4 +1,4 @@
-import { Grid2 } from '@mui/material';
+import { Box, Grid2 } from '@mui/material';
 import { ProductItem } from '../ProductItem/ProductItem';
 import { useSearch } from '../../hooks/useSearch';
 import { filterProductsByTitle } from '../../utils/products';
@@ -10,7 +10,7 @@ export const ProductList = () => {
   const { value } = useSearch();
 
   return (
-    <>
+    <Box component="section">
       {!!products.length && <Search />}
       <Grid2 container spacing={5} sx={{ justifyContent: 'center', marginBottom: 10 }}>
         {filterProductsByTitle(value, products).map((product) => (
@@ -23,6 +23,6 @@ export const ProductList = () => {
           />
         ))}
       </Grid2>
-    </>
+    </Box>
   );
 };
