@@ -1,9 +1,11 @@
 import { Products } from '../components/Products/Products';
 
-export const HomePage = () => {
+const HomePage = () => {
   return (
     <>
       <Products />
     </>
   );
 };
+
+export default HomePage;
