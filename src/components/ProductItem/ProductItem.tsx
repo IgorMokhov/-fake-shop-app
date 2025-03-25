@@ -1,9 +1,30 @@
 import { Button, Card, CardContent, CardMedia, Grid2, Typography } from '@mui/material';
-import { IProduct } from '../../types/products';
+import { ICartItem, IProduct } from '../../types/products';
 
-interface IProductItemProps extends Omit<IProduct, 'description'> {}
+interface IProductItemProps extends IProduct {
+  ordered: boolean;
+  addToOrder: (product: ICartItem) => void;
+  removeFromOrder: (id: number) => void;
+}
 
-export const ProductItem = ({ image, title, category, price }: IProductItemProps) => {
+export const ProductItem = ({
+  id,
+  image,
+  title,
+  category,
+  price,
+  ordered,
+  addToOrder,
+  removeFromOrder,
+}: IProductItemProps) => {
+  const handleClick = () => {
+    if (ordered) {
+      removeFromOrder(id);
+    } else {
+      addToOrder({ id, title, price, image, quantity: 1 });
+    }
+  };
+
   return (
     <Grid2>
       <Card sx={{ width: 345, height: 450, p: 3 }}>
@@ -27,8 +48,12 @@ export const ProductItem = ({ image, title, category, price }: IProductItemProps
           <Typography variant="h5" component="h5">
             ${price}
           </Typography>
-          <Button sx={{ position: 'absolute', bottom: 20, right: 0 }} variant="text">
-            add to cart
+          <Button
+            sx={{ position: 'absolute', bottom: 20, right: 0 }}
+            variant="text"
+            onClick={handleClick}
+          >
+            {ordered ? 'remove from cart' : 'add to cart'}
           </Button>
         </CardContent>
       </Card>
