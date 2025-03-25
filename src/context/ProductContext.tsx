@@ -5,6 +5,7 @@ import { getAllProducts } from '../services/api';
 interface IProductContext {
   products: IProduct[];
   order: ICartItem[];
+  totalPrice: number;
   addToOrder: (product: ICartItem) => void;
   removeFromOrder: (id: number) => void;
 }
@@ -14,6 +15,7 @@ export const ProductContext = createContext<IProductContext | null>(null);
 export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [products, setProducts] = useState<IProduct[]>([]);
   const [order, setOrder] = useState<ICartItem[]>([]);
+  const totalPrice = order.reduce((sum, product) => sum + product.price * product.quantity, 0);
 
   const addToOrder = (product: ICartItem) => {
     setOrder((prevOrder) => {
@@ -59,7 +61,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <ProductContext.Provider value={{ products, order, addToOrder, removeFromOrder }}>
+    <ProductContext.Provider value={{ products, order, totalPrice, addToOrder, removeFromOrder }}>
       {children}
     </ProductContext.Provider>
   );
