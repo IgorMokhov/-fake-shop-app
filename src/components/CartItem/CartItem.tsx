@@ -29,7 +29,7 @@ export const CartItem = ({
   addToOrder,
 }: ICartItemProps) => {
   const decreaseCountHandler = () => {
-    if (quantity <= 0) return;
+    if (quantity <= 1) return;
     decreaseCount(id);
   };
 
@@ -53,7 +53,7 @@ export const CartItem = ({
         </ListItemAvatar>
         <ListItemText
           sx={{ width: '100%' }}
-          primary={` Price: $${price}`}
+          primary={` Price: $${price.toFixed(2)}`}
           secondary={
             <Typography
               component="span"
@@ -66,7 +66,7 @@ export const CartItem = ({
         />
 
         <Typography variant="h5" component="span">
-          ${price * quantity}
+          ${(price * quantity).toFixed(2)}
         </Typography>
 
         <ButtonGroup sx={{ mx: 3 }}>
@@ -80,6 +80,9 @@ export const CartItem = ({
             <Add fontSize="small" />
           </Button>
         </ButtonGroup>
+        <Typography variant="h6" component="span">
+          Qty:{quantity}
+        </Typography>
       </ListItem>
       <Divider variant="inset" component="li" />
     </>

@@ -46,7 +46,7 @@ export const ProductItem = ({
             {category}
           </Typography>
           <Typography variant="h5" component="h5">
-            ${price}
+            ${price.toFixed(2)}
           </Typography>
           <Button
             sx={{ position: 'absolute', bottom: 20, right: 0 }}
