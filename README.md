@@ -1,10 +1,23 @@
 # Fake Shop App
 
+![demo](https://github.com/user-attachments/assets/f02805d3-237a-4205-a532-f6d3c7a1872c)
+[Deployed Project](https://fake-shop-app-three.vercel.app)
+
 ## Introduction
 
 Fake Shop App - React Single Page Application.
 
 Test task for the position of "Frontend Developer (React/Next.js)" (Photo Point)
+
+## Technologies
+
+- React
+- React Router
+- Context API
+- TypeScript
+- Material UI
+- Axios
+- Vite
 
 ## Getting Started
 
