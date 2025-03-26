@@ -1,5 +1,7 @@
 import {
   Avatar,
+  Button,
+  ButtonGroup,
   Divider,
   IconButton,
   ListItem,
@@ -7,14 +9,30 @@ import {
   ListItemText,
   Typography,
 } from '@mui/material';
-import { Delete } from '@mui/icons-material';
+import { Add, Delete, Remove } from '@mui/icons-material';
 import { ICartItem } from '../../types/products';
 
 interface ICartItemProps extends ICartItem {
   removeFromOrder: (id: number) => void;
+  decreaseCount: (id: number) => void;
+  addToOrder: (product: ICartItem) => void;
 }
 
-export const CartItem = ({ id, image, price, title, removeFromOrder }: ICartItemProps) => {
+export const CartItem = ({
+  id,
+  image,
+  price,
+  title,
+  quantity,
+  removeFromOrder,
+  decreaseCount,
+  addToOrder,
+}: ICartItemProps) => {
+  const decreaseCountHandler = () => {
+    if (quantity <= 0) return;
+    decreaseCount(id);
+  };
+
   return (
     <>
       <ListItem
@@ -46,6 +64,22 @@ export const CartItem = ({ id, image, price, title, removeFromOrder }: ICartItem
             </Typography>
           }
         />
+
+        <Typography variant="h5" component="span">
+          ${price * quantity}
+        </Typography>
+
+        <ButtonGroup sx={{ mx: 3 }}>
+          <Button aria-label="reduce" onClick={decreaseCountHandler}>
+            <Remove fontSize="small" />
+          </Button>
+          <Button
+            aria-label="increase"
+            onClick={() => addToOrder({ id, image, price, title, quantity: 1 })}
+          >
+            <Add fontSize="small" />
+          </Button>
+        </ButtonGroup>
       </ListItem>
       <Divider variant="inset" component="li" />
     </>

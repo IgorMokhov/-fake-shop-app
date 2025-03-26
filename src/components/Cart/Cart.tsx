@@ -3,7 +3,7 @@ import { useProducts } from '../../hooks/useProducts';
 import { CartItem } from '../CartItem/CartItem';
 
 export const Cart = () => {
-  const { order, totalPrice, removeFromOrder } = useProducts();
+  const { order, totalPrice, removeFromOrder, addToOrder, decreaseCount } = useProducts();
 
   return (
     <>
@@ -12,7 +12,13 @@ export const Cart = () => {
         <>
           <List sx={{ width: '100%', py: 4 }}>
             {order.map((item) => (
-              <CartItem {...item} removeFromOrder={removeFromOrder} key={item.id} />
+              <CartItem
+                {...item}
+                addToOrder={addToOrder}
+                removeFromOrder={removeFromOrder}
+                decreaseCount={decreaseCount}
+                key={item.id}
+              />
             ))}
           </List>
           <Typography variant="h5">Total Price: ${totalPrice.toFixed(2)}</Typography>
