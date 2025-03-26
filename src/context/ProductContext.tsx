@@ -6,6 +6,7 @@ interface IProductContext {
   products: IProduct[];
   order: ICartItem[];
   totalPrice: number;
+  totalCount: number;
   error: string | null;
   addToOrder: (product: ICartItem) => void;
   removeFromOrder: (id: number) => void;
@@ -18,6 +19,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [order, setOrder] = useState<ICartItem[]>([]);
   const [error, setError] = useState<string | null>(null);
   const totalPrice = order.reduce((sum, product) => sum + product.price * product.quantity, 0);
+  const totalCount = order.reduce((sum, product) => sum + product.quantity, 0);
 
   const addToOrder = ({ id, title, price, image }: ICartItem) => {
     setOrder((prevOrder) => {
@@ -61,13 +63,13 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
         }
       }
     };
-    
+
     fetchData();
   }, []);
 
   return (
     <ProductContext.Provider
-      value={{ products, order, totalPrice, error, addToOrder, removeFromOrder }}
+      value={{ products, order, totalPrice, totalCount, error, addToOrder, removeFromOrder }}
     >
       {children}
     </ProductContext.Provider>
