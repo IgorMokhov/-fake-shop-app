@@ -10,6 +10,7 @@ interface IProductContext {
   error: string | null;
   addToOrder: (product: ICartItem) => void;
   removeFromOrder: (id: number) => void;
+  decreaseCount: (id: number) => void;
 }
 
 export const ProductContext = createContext<IProductContext | null>(null);
@@ -48,6 +49,19 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     setOrder((prevOrder) => prevOrder.filter((item) => item.id !== id));
   };
 
+  const decreaseCount = (id: number) => {
+    setOrder((prevOrder) =>
+      prevOrder.map((item) =>
+        item.id === id
+          ? {
+              ...item,
+              quantity: item.quantity - 1,
+            }
+          : item
+      )
+    );
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       setError(null);
@@ -69,7 +83,16 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <ProductContext.Provider
-      value={{ products, order, totalPrice, totalCount, error, addToOrder, removeFromOrder }}
+      value={{
+        products,
+        order,
+        totalPrice,
+        totalCount,
+        error,
+        addToOrder,
+        removeFromOrder,
+        decreaseCount,
+      }}
     >
       {children}
     </ProductContext.Provider>
