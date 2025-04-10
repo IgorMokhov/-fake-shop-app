@@ -14,7 +14,7 @@ interface IFiltersContext {
 export const FiltersContext = createContext<IFiltersContext | null>(null);
 
 export const FiltersProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [minPrice, setMinPrice] = useState<number | null>(null);
   const [maxPrice, setMaxPrice] = useState<number | null>(null);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
