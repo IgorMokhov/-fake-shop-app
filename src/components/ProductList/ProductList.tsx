@@ -7,10 +7,15 @@ import { useFilters } from '../../hooks/useFilters';
 
 export const ProductList = () => {
   const { products, order, error, addToOrder, removeFromOrder } = useProducts();
-  const { minPrice, maxPrice } = useFilters();
+  const { minPrice, maxPrice, selectedCategories } = useFilters();
   const { value } = useSearch();
 
-  const filteredProducts = getProductsByFilters(minPrice, maxPrice, products);
+  const filteredProducts = getProductsByFilters(
+    minPrice,
+    maxPrice,
+    selectedCategories,
+    products
+  );
 
   if (error)
     return (
