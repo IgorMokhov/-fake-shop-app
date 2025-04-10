@@ -1,11 +1,12 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ThemeProvider } from '@mui/material';
-import { App } from './App.tsx';
 import { theme, GlobalStylesComponent } from './theme';
 import { BrowserRouter } from 'react-router';
 import { ProductProvider } from './context/ProductContext.tsx';
 import { SearchProvider } from './context/SearchContext.tsx';
+import { FiltersProvider } from './context/FiltersContext.tsx';
+import { App } from './App.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -13,9 +14,11 @@ createRoot(document.getElementById('root')!).render(
       <GlobalStylesComponent />
       <BrowserRouter>
         <ProductProvider>
-          <SearchProvider>
-            <App />
-          </SearchProvider>
+          <FiltersProvider>
+            <SearchProvider>
+              <App />
+            </SearchProvider>
+          </FiltersProvider>
         </ProductProvider>
       </BrowserRouter>
     </ThemeProvider>
