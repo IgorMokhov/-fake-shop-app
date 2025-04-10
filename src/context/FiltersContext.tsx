@@ -21,11 +21,13 @@ export const FiltersProvider = ({ children }: { children: React.ReactNode }) => 
   };
 
   const handleMinPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setMinPrice(e.target.valueAsNumber);
+    const value = e.target.value;
+    setMinPrice(value === '' ? null : Number(value));
   };
 
   const handleMaxPriceChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setMaxPrice(e.target.valueAsNumber);
+    const value = e.target.value;
+    setMaxPrice(value === '' ? null : Number(value));
   };
 
   return (
